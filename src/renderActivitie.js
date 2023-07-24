@@ -40,16 +40,19 @@ export const renderFunction = (JsonObjectsArray) => {
 
     activCtn.appendChild(actElmnt);
 
+    // Adding change event listener to check box function of created item
     chkBx.addEventListener('change', (e) => {
       const myInput = document.querySelector(_.join(['#', 'lb', e.target.id.slice(-1)], ''));
       activities.updateActivitie(myInput.value, e.target.checked, e.target.id.slice(-1));
     });
 
+    // Adding change event listener to label input change of created item
     chkLabel.addEventListener('change', (e) => {
       const myCheck = document.querySelector(_.join(['#', 'ck', e.target.id.slice(-1)], ''));
       activities.updateActivitie(e.target.value, myCheck.checked, e.target.id.slice(-1));
     });
 
+    // Adding click event listener to delete button of created item
     myImg.addEventListener('click', (e) => {
       activities.removeActivite(e.target.id.slice(-1));
       renderFunction(activities.activities);

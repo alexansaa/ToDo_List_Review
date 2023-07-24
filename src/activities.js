@@ -4,10 +4,10 @@ export default class Activities {
   constructor(description, completed, index = null) {
     let newIndex = 0;
     if (index === null) {
-      if (Activities.activities.length === 0) {
+      if (this.activities.length === 0) {
         newIndex = 1;
       } else {
-        newIndex = Activities.activities[Activities.activities.length - 1].index + 1;
+        newIndex = this.activities[this.activities.length - 1].index + 1;
       }
     } else {
       newIndex = index;
@@ -19,50 +19,48 @@ export default class Activities {
   }
 
   static addNewActivitie(description, completed) {
-    const NewActivitie = new Activities(description, completed);
-    Activities.activities.push(NewActivitie);
-    Activities.updateData();
+    const NewActivitie = new this(description, completed);
+    this.activities.push(NewActivitie);
+    this.updateData();
   }
 
   static updateActivitie(description, completed, index) {
-    const targetObj = Activities.activities.find((obj) => obj.index === parseInt(index, 10));
+    const targetObj = this.activities.find((obj) => obj.index === parseInt(index, 10));
     targetObj.description = description;
     targetObj.completed = completed;
-    Activities.updateData();
+    this.updateData();
   }
 
   static removeActivite(index) {
     this.activities = this.activities.filter((item) => item.index !== parseInt(index, 10));
-    Activities.reorder();
-    Activities.updateData();
+    this.reorder();
+    this.updateData();
   }
 
   static removeDone() {
-    Activities.activities = Activities.activities.filter((item) => item.completed === false);
-    Activities.reorder();
-    Activities.updateData();
+    this.activities = this.activities.filter((item) => item.completed === false);
+    this.reorder();
+    this.updateData();
   }
 
   static reorder() {
-    const tmpArr = [];
     let count = 0;
-    Activities.activities.forEach((item) => {
+    const tmpArr = this.activities.map((item) => {
       count += 1;
-      const tmpEl = new Activities(item.description, item.completed, count);
-      tmpArr.push(tmpEl);
+      item.index = count;
     });
     this.activities = tmpArr;
   }
 
   static updateData() {
-    localStorage.setItem('activities', JSON.stringify(Activities.activities));
+    localStorage.setItem('activities', JSON.stringify(this.activities));
   }
 
   static loadData() {
-    Activities.activities = JSON.parse(localStorage.getItem('activities'));
-    if (Activities.activities === null || Activities.activities.length === 0) {
-      Activities.activities = [];
+    this.activities = JSON.parse(localStorage.getItem('activities'));
+    if (this.activities === null || this.activities.length === 0) {
+      this.activities = [];
     }
-    Activities.updateData();
+    this.updateData();
   }
 }
