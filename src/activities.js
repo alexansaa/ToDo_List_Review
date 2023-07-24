@@ -48,6 +48,7 @@ export default class Activities {
     const tmpArr = this.activities.map((item) => {
       count += 1;
       item.index = count;
+      return item;
     });
     this.activities = tmpArr;
   }
