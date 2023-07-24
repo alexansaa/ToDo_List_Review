@@ -4,10 +4,10 @@ export default class Activities {
   constructor(description, completed, index = null) {
     let newIndex = 0;
     if (index === null) {
-      if (this.activities.length === 0) {
+      if (Activities.activities.length === 0) {
         newIndex = 1;
       } else {
-        newIndex = this.activities[this.activities.length - 1].index + 1;
+        newIndex = Activities.activities[Activities.activities.length - 1].index + 1;
       }
     } else {
       newIndex = index;
